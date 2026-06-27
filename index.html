@@ -3,29 +3,77 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>간단 뽑기 프로그램</title>
+  <title>공식 번호 추첨 시스템</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="src/styles.css" />
 </head>
 <body>
-  <main class="app">
-    <h1>간단 뽑기 프로그램</h1>
-    <p>이름을 한 줄에 하나씩 입력하고 당첨자 수를 고른 뒤 뽑기를 누르세요.</p>
-    <label for="names">참가자 이름</label>
-    <textarea id="names" rows="10" placeholder="김하나
-이두리
-박세찬"></textarea>
-    <label for="winner-count">당첨자 수</label>
-    <input id="winner-count" type="number" min="1" value="1" />
-    <div class="actions">
-      <button id="draw-button">뽑기</button>
-      <button id="reset-button" type="button">초기화</button>
+  <header class="topbar">
+    <div>
+      <p class="eyebrow">PUBLIC DRAW SYSTEM</p>
+      <h1>공식 번호 추첨 시스템</h1>
     </div>
-    <section aria-live="polite">
-      <h2>결과</h2>
-      <ol id="result-list"></ol>
-      <p id="message"></p>
+    <time id="current-time">-</time>
+  </header>
+
+  <main class="layout">
+    <section class="panel control-panel" aria-labelledby="setup-title">
+      <div class="section-heading">
+        <p class="eyebrow">01 · 추첨 조건</p>
+        <h2 id="setup-title">현장 조건 확인</h2>
+      </div>
+
+      <div class="field-grid">
+        <label>기관명
+          <input id="agency-name" value="공공기관" autocomplete="organization" />
+        </label>
+        <label>행사명
+          <input id="event-name" value="공식 번호 추첨" />
+        </label>
+        <label>시작 번호
+          <input id="start-number" type="number" min="1" max="30" value="1" inputmode="numeric" />
+        </label>
+        <label>끝 번호
+          <input id="end-number" type="number" min="1" max="30" value="30" inputmode="numeric" />
+        </label>
+        <label>당첨 수
+          <input id="winner-count" type="number" min="1" max="30" value="1" inputmode="numeric" />
+        </label>
+      </div>
+
+      <div class="condition-card">
+        <span>진행 전 낭독용 요약</span>
+        <strong id="condition-summary">-</strong>
+      </div>
+
+      <div class="button-grid">
+        <button id="draw-button" class="primary">추첨 시작 및 결과 확정</button>
+        <button id="redraw-button" class="secondary">재추첨</button>
+        <button id="copy-button" class="ghost">결과 복사</button>
+        <button id="reset-button" class="danger">전체 초기화</button>
+      </div>
+      <p class="helper">재추첨 시 기존 결과는 아래 감사 로그에 보존됩니다.</p>
+    </section>
+
+    <section class="panel result-panel" aria-labelledby="result-title">
+      <div class="section-heading">
+        <p class="eyebrow">02 · 결과</p>
+        <h2 id="result-title">확정 결과</h2>
+      </div>
+      <div class="stage" id="stage-text" data-tone="ready">추첨 대기</div>
+      <ol id="result-list" class="result-list" aria-live="polite"></ol>
+      <p id="message" class="message" data-tone="info"></p>
+    </section>
+
+    <section class="panel audit-panel" aria-labelledby="audit-title">
+      <div class="section-heading">
+        <p class="eyebrow">03 · 감사 로그</p>
+        <h2 id="audit-title">현장 기록</h2>
+      </div>
+      <ul id="audit-list" class="audit-list"></ul>
     </section>
   </main>
-  <script type="module" src="src/app.js"></script>
 </body>
 </html>
