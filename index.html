@@ -1,0 +1,31 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>간단 뽑기 프로그램</title>
+  <link rel="stylesheet" href="src/styles.css" />
+</head>
+<body>
+  <main class="app">
+    <h1>간단 뽑기 프로그램</h1>
+    <p>이름을 한 줄에 하나씩 입력하고 당첨자 수를 고른 뒤 뽑기를 누르세요.</p>
+    <label for="names">참가자 이름</label>
+    <textarea id="names" rows="10" placeholder="김하나
+이두리
+박세찬"></textarea>
+    <label for="winner-count">당첨자 수</label>
+    <input id="winner-count" type="number" min="1" value="1" />
+    <div class="actions">
+      <button id="draw-button">뽑기</button>
+      <button id="reset-button" type="button">초기화</button>
+    </div>
+    <section aria-live="polite">
+      <h2>결과</h2>
+      <ol id="result-list"></ol>
+      <p id="message"></p>
+    </section>
+  </main>
+  <script type="module" src="src/app.js"></script>
+</body>
+</html>
