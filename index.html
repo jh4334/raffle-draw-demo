@@ -3,78 +3,106 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>공식 번호 추첨 시스템</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <meta name="description" content="공공기관 공식 행사용 모바일 우선 번호 추첨 콘솔" />
+  <meta name="theme-color" content="#061b31" />
+  <meta property="og:title" content="공식 번호 추첨 콘솔" />
+  <meta property="og:description" content="공정한 공개 추첨을 위한 모바일 우선 공식 번호 추첨 콘솔" />
+  <title>공식 번호 추첨 콘솔</title>
   <link rel="stylesheet" href="src/styles.css" />
 </head>
 <body>
-  <header class="topbar">
-    <div>
-      <p class="eyebrow">PUBLIC DRAW SYSTEM</p>
-      <h1>공식 번호 추첨 시스템</h1>
+  <a class="skip-link" href="#main-content">본문으로 이동</a>
+
+  <header class="console-header" aria-label="공식 추첨 헤더">
+    <div class="header-copy">
+      <span class="kicker">Official public draw</span>
+      <h1>공식 번호 추첨 콘솔</h1>
+      <p><strong id="header-agency">공공기관</strong> · <span id="header-event">공식 번호 추첨</span></p>
     </div>
-    <time id="current-time">-</time>
+    <time id="current-time" class="clock">-</time>
   </header>
 
-  <main class="layout">
-    <section class="panel control-panel" aria-labelledby="setup-title">
-      <div class="section-heading">
-        <p class="eyebrow">01 · 추첨 조건</p>
-        <h2 id="setup-title">현장 조건 확인</h2>
+  <main id="main-content" class="console-shell">
+    <section class="draw-hero" aria-labelledby="result-title">
+      <div class="hero-status">
+        <span class="status-dot" aria-hidden="true"></span>
+        <span id="stage-text" class="stage" data-tone="ready">공식 추첨 대기</span>
       </div>
 
-      <div class="field-grid">
-        <label>기관명
-          <input id="agency-name" value="공공기관" autocomplete="organization" />
-        </label>
-        <label>행사명
-          <input id="event-name" value="공식 번호 추첨" />
-        </label>
-        <label>시작 번호
-          <input id="start-number" type="number" min="1" max="30" value="1" inputmode="numeric" />
-        </label>
-        <label>끝 번호
-          <input id="end-number" type="number" min="1" max="30" value="30" inputmode="numeric" />
-        </label>
-        <label>당첨 수
-          <input id="winner-count" type="number" min="1" max="30" value="1" inputmode="numeric" />
-        </label>
+      <div class="hero-grid">
+        <div class="result-copy">
+          <span class="section-label">확정 결과</span>
+          <h2 id="result-title">공식 당첨 번호</h2>
+          <p id="message" class="message" data-tone="info">기본 조건 확인 후 공식 추첨을 시작하세요.</p>
+        </div>
+
+        <div class="result-frame" aria-label="당첨 번호 표시 영역">
+          <ol id="result-list" class="result-list" aria-live="polite" aria-label="확정 당첨 번호"></ol>
+        </div>
       </div>
 
-      <div class="condition-card">
-        <span>진행 전 낭독용 요약</span>
-        <strong id="condition-summary">-</strong>
+      <div class="hero-actions" aria-label="추첨 주요 작업">
+        <button id="draw-button" class="primary-action" type="button">공식 추첨 시작</button>
+        <button id="redraw-button" class="secondary-action" type="button">재추첨 진행</button>
       </div>
-
-      <div class="button-grid">
-        <button id="draw-button" class="primary">추첨 시작 및 결과 확정</button>
-        <button id="redraw-button" class="secondary">재추첨</button>
-        <button id="copy-button" class="ghost">결과 복사</button>
-        <button id="reset-button" class="danger">전체 초기화</button>
-      </div>
-      <p class="helper">재추첨 시 기존 결과는 아래 감사 로그에 보존됩니다.</p>
     </section>
 
-    <section class="panel result-panel" aria-labelledby="result-title">
-      <div class="section-heading">
-        <p class="eyebrow">02 · 결과</p>
-        <h2 id="result-title">확정 결과</h2>
-      </div>
-      <div class="stage" id="stage-text" data-tone="ready">추첨 대기</div>
-      <ol id="result-list" class="result-list" aria-live="polite"></ol>
-      <p id="message" class="message" data-tone="info"></p>
-    </section>
+    <section class="console-grid" aria-label="추첨 운영 정보">
+      <details id="settings-panel" class="setup-panel">
+        <summary>
+          <span>
+            <span class="section-label">추첨 조건</span>
+            <strong>현장 조건 확인 및 변경</strong>
+          </span>
+          <span class="summary-chevron" aria-hidden="true"></span>
+        </summary>
 
-    <section class="panel audit-panel" aria-labelledby="audit-title">
-      <div class="section-heading">
-        <p class="eyebrow">03 · 감사 로그</p>
-        <h2 id="audit-title">현장 기록</h2>
-      </div>
-      <ul id="audit-list" class="audit-list"></ul>
+        <div class="condition-summary" aria-label="진행 전 낭독용 요약">
+          <span>진행 전 요약</span>
+          <strong id="condition-summary">-</strong>
+        </div>
+
+        <div class="field-grid">
+          <label for="agency-name">기관명
+            <input id="agency-name" value="공공기관" autocomplete="organization" />
+          </label>
+          <label for="event-name">행사명
+            <input id="event-name" value="공식 번호 추첨" />
+          </label>
+          <label for="start-number">시작 번호
+            <input id="start-number" type="number" min="1" max="30" value="1" inputmode="numeric" />
+          </label>
+          <label for="end-number">끝 번호
+            <input id="end-number" type="number" min="1" max="30" value="30" inputmode="numeric" />
+          </label>
+          <label for="winner-count">당첨 수
+            <input id="winner-count" type="number" min="1" max="30" value="1" inputmode="numeric" />
+          </label>
+        </div>
+      </details>
+
+      <section class="audit-panel" aria-labelledby="audit-title">
+        <div class="panel-heading">
+          <span class="section-label">감사 로그</span>
+          <h2 id="audit-title">현장 확정 기록</h2>
+        </div>
+        <ul id="audit-list" class="audit-list"></ul>
+      </section>
+
+      <section class="operation-panel" aria-labelledby="operation-title">
+        <div class="panel-heading">
+          <span class="section-label">운영</span>
+          <h2 id="operation-title">결과 문구</h2>
+        </div>
+        <div class="support-actions">
+          <button id="copy-button" class="quiet-action" type="button">결과 문구 복사</button>
+          <button id="reset-button" class="danger-action" type="button">세션 초기화</button>
+        </div>
+        <p class="notice">재추첨은 새 회차로 기록되며 이전 감사 로그를 덮어쓰지 않습니다.</p>
+      </section>
     </section>
   </main>
+
   <script type="module" src="src/app.js"></script>
 </body>
 </html>
